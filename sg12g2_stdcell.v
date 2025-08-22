@@ -648,17 +648,31 @@ module sg13g2_sdfbbp_1 (Q, Q_N, D, SCD, SCE, RESET_B, SET_B, CLK);
 	output Q, Q_N;
 	input D, SCD, SCE, RESET_B, SET_B, CLK;
 
-	// TODO
-
+	assign Q_N = ~Q;
+	always @(posedge CLK or negedge RESET_B or negedge SET_B) begin
+		if (!SET_B) begin
+			Q <= 1'b1;
+		end else if (!RESET_B) begin
+			Q <= 1'b0;
+		end else begin
+			Q <= SCE ? SCD : D;
+		end
+	end
 endmodule
 
-// type: sdfrbp 
+// type: sdfrbp
 module sg13g2_sdfrbp_1 (Q, Q_N, D, SCD, SCE, RESET_B, CLK);
 	output Q, Q_N;
 	input D, SCD, SCE, RESET_B, CLK;
 
-	// TODO
-
+	assign Q_N = ~Q;
+	always @(posedge CLK or negedge RESET_B) begin
+		if (!RESET_B) begin
+			Q <= 1'b0;
+		end else begin
+			Q <= SCE ? SCD : D;
+		end
+	end
 endmodule
 
 // type: sdfrbp 
@@ -666,8 +680,14 @@ module sg13g2_sdfrbp_2 (Q, Q_N, D, SCD, SCE, RESET_B, CLK);
 	output Q, Q_N;
 	input D, SCD, SCE, RESET_B, CLK;
 
-	// TODO
-
+	assign Q_N = ~Q;
+	always @(posedge CLK or negedge RESET_B) begin
+		if (!RESET_B) begin
+			Q <= 1'b0;
+		end else begin
+			Q <= SCE ? SCD : D;
+		end
+	end
 endmodule
 
 // type: sdfrbpq 
@@ -675,25 +695,32 @@ module sg13g2_sdfrbpq_1 (Q, D, SCD, SCE, RESET_B, CLK);
 	output Q;
 	input D, SCD, SCE, RESET_B, CLK;
 
-	// TODO
-
+	always @(posedge CLK or negedge RESET_B) begin
+		if (!RESET_B) begin
+			Q <= 1'b0;
+		end else begin
+			Q <= SCE ? SCD : D;
+		end
+	end
 endmodule
-`endcelldefine
 
 // type: sdfrbpq 
 module sg13g2_sdfrbpq_2 (Q, D, SCD, SCE, RESET_B, CLK);
 	output Q;
 	input D, SCD, SCE, RESET_B, CLK;
 
-	// TODO
-
+	always @(posedge CLK or negedge RESET_B) begin
+		if (!RESET_B) begin
+			Q <= 1'b0;
+		end else begin
+			Q <= SCE ? SCD : D;
+		end
+	end
 endmodule
-`endcelldefine
 
 // type: keepstate 
 module sg13g2_sighold (SH);
 	inout SH;
-
 endmodule
 
 // type: sgclk 
